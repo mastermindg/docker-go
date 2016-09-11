@@ -1,0 +1,28 @@
+env:
+  global:
+    - VERSION=0.${TRAVIS_BUILD_NUMBER}
+  matrix:  
+    - ARCH=x86_64
+      DOCKER_BUILD=mastermindg/docker-go:amd64-${VERSION}
+      DOCKERFILE=Dockerfile.amd64
+    - ARCH=rpi
+      DOCKER_BUILD=mastermindg/docker-go:rpi-${VERSION}
+      DOCKERFILE=Dockerfile.rpi
+
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker run --rm --privileged multiarch/qemu-user-static:register
+  - docker build -t ${DOCKER_BUILD} -f ${DOCKERFILE} .
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD || false'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && docker push ${DOCKER_BUILD} || false'
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
