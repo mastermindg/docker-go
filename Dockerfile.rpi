@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:wheey
+FROM resin/rpi-raspbian:wheezy
 FROM hypriot/rpi-golang:1.4.2
 MAINTAINER Ken Jenney <mastermindg@gmail.com>
 # Sourced from hypriot/rpi-golang but needed newer version for cross-compiling
