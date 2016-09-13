@@ -17,13 +17,12 @@ RUN apt-get update && apt-get install -y \
 ENV GOROOT_BOOTSTRAP /goroot
 ENV GOLANG_VERSION 1.6
 ADD ./etc/services /etc/services
-RUN \
-    mkdir -p /goroot1.6 && \
-    git clone https://go.googlesource.com/go /goroot1.6 && \
-    cd /goroot1.6 && \
-    git checkout go$GOLANG_VERSION && \
-    cd /goroot1.6/src && \
-    GOARM=6 ./make.bash
+RUN mkdir -p /goroot1.6
+RUN git clone https://go.googlesource.com/go /goroot1.6
+RUN cd /goroot1.6 
+RUN git checkout go$GOLANG_VERSION 
+RUN cd /goroot1.6/src
+RUN GOARM=6 ./make.bash
 
 # Set environment variables
 ENV GOROOT /goroot1.6
