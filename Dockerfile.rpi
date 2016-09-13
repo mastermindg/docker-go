@@ -15,24 +15,24 @@ RUN apt-get update && apt-get install -y \
 
 # Compile Go from source
 ENV GOROOT_BOOTSTRAP /goroot
-ENV GOLANG_VERSION 1.7
+ENV GOLANG_VERSION 1.6
 ADD ./etc/services /etc/services
 RUN \
-    mkdir -p /goroot1.7 && \
-    git clone https://go.googlesource.com/go /goroot1.7 && \
-    cd /goroot1.7 && \
+    mkdir -p /goroot1.6 && \
+    git clone https://go.googlesource.com/go /goroot1.6 && \
+    cd /goroot1.6 && \
     git checkout go$GOLANG_VERSION && \
-    cd /goroot1.7/src && \
-    GOARM=7 ./all.bash
+    cd /goroot1.6/src && \
+    GOARM=6 ./all.bash
 
 # Set environment variables
-ENV GOROOT /goroot1.7
-ENV GOPATH /gopath1.7
-ENV GOARM 7
+ENV GOROOT /goroot1.6
+ENV GOPATH /gopath1.6
+ENV GOARM 6
 ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 
 # Define working directory
-WORKDIR /gopath1.7
+WORKDIR /gopath1.6
 
 # Define default command
 CMD ["bash"]
