@@ -23,7 +23,7 @@ RUN \
     cd /goroot1.6 && \
     git checkout go$GOLANG_VERSION && \
     cd /goroot1.6/src && \
-    GOARM=6 ./all.bash
+    GOARM=6 ./make.bash
 
 # Set environment variables
 ENV GOROOT /goroot1.6
